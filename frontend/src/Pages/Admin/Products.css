@@ -1,0 +1,46 @@
+/* Products.css */
+
+/* Center-aligns the product cards container and adjusts spacing */
+.d-flex.flex-wrap.justify-content-center {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Styles for smaller cards */
+.small-card {
+    width: 12rem; /* Set card width to a smaller size */
+    height: 15rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Adds a hover effect to the smaller cards */
+.small-card:hover {
+    transform: scale(1.05);
+}
+
+/* Ensures the product image fits well and is smaller */
+.small-card-img {
+    /* object-fit: cover; */
+    padding: 1rem;
+    height: 150px; 
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+/* Adjusts text size for smaller cards */
+.small-card-title {
+    font-size: 1rem;
+}
+
+.small-card-text {
+    font-size: 0.875rem;
+}
+
+/* Removes underlines from links */
+.product-link {
+    text-decoration: none;
+    color: inherit;
+}
