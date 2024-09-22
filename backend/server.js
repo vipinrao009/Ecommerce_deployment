@@ -34,6 +34,11 @@ app.use("/api/v1/user",user)
 app.use("/api/v1/category",category)
 app.use("/api/v1/product",product)
 
+app.use(express.static(path.join(_dirname,"/frontend/build")))
+
+app.get('*',(req,res)=>{
+  res.sendFile(path.resolve(_dirname,"frontend","build","index.html"))
+})
 
 app.use("/", (req, res) => {
   res.send("<h1>Welcome to ecommerce website</h1>");
