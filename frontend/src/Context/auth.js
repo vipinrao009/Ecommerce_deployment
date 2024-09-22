@@ -1,41 +1,38 @@
-import axios from "axios"
-import {useState, createContext, useContext, useEffect} from "react"
+import axios from "axios";
+import { useState, createContext, useContext, useEffect } from "react";
 
-const AuthContext = createContext()
+const AuthContext = createContext();
 
-const AuthProvider = ({children})=>{
-    const [auth,setAuth] = useState({
-        user:null,
-        token:""
-    })
+const AuthProvider = ({ children }) => {
+    const [auth, setAuth] = useState({
+        user: null,
+        token: ""
+    });
 
-    //default axios => axios req ke sath by default header jayega hmko mannually nahi send karana padega
-        axios.defaults.headers.common["Authorization"] = auth.token
-
-    useEffect(()=>{
-        const data = localStorage.getItem('auth')
-        if(data){
-            const parseData = JSON.parse(data)
-
+    useEffect(() => {
+        const data = localStorage.getItem('auth');
+        if (data) {
+            const parsedData = JSON.parse(data);
+            // Set the state directly with parsed user and token
             setAuth({
-                ...auth,
-                user:parseData.user,
-                token:parseData.token
-            })
+                user: parsedData.user, 
+                token: parsedData.token
+            });
+
+            // Moved the setting of Axios Authorization header inside useEffect 
+            // after we successfully retrieve the token from localStorage
+            axios.defaults.headers.common["Authorization"] = parsedData.token;
         }
-    },[])
+    }, []); // Empty dependency array to run this effect only once when the component mounts
 
-    return(
-        <>
-          <AuthContext.Provider value={[auth,setAuth]}>
+    return (
+        <AuthContext.Provider value={[auth, setAuth]}>
             {children}
-          </AuthContext.Provider>
-        </>
-    )
-}
+        </AuthContext.Provider>
+    );
+};
 
-//Custom hook 
-const useAuth = () => useContext(AuthContext); //This defines useAuth as a custom hook that can be used within any functional component to access the AuthContext.
+// Custom hook to use the AuthContext
+const useAuth = () => useContext(AuthContext);
 
-
-export {useAuth,AuthProvider}
+export { useAuth, AuthProvider };
